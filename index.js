@@ -70,13 +70,13 @@ module.exports = class UNO {
         if (!this.isStarted) this.error("not started");
         const deck = this.players[name]
         if (!deck) return this.error("player doesn't exist");
+        if (name !== this.lookup[this.index]) return this.error("not current player");
         if (string === "pickup") {
             deck.push(...this.cards.splice(-1 - this.penalty));
             this.penalty = 0;
             this.current += this.direction;
             return;
         }
-        if (name !== this.lookup[this.index]) return this.error("not current player");
         const card = this.cardToNumber(string);
         if (!this.includes(deck, card)) return this.error("player doesn't have the card");
         const last = this.stack.slice(-1);
